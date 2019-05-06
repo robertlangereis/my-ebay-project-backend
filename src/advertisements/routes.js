@@ -48,12 +48,19 @@ router.post('/advertisements', function (req, res) {
 })
 
 //UPDATE ADVERTISEMENT    
-router.put('/advertisements/:id', function (req, res) {
-  const id = req.params.id
-  Advertisements.findByPk(id)
+router.put('/advertisements/:id', (req, res, next) => { console.log("incoming !!!!!!!!")
+  Advertisements
+  .findByPk(req.params.id)
   .then(advertisement => {
-    advertisement
-    .update(res.body).then(advertisement => console.log(`The advertisement is now created. The ID = ${advertisement.id}`))
+    if (!advertisement) {
+      return res.status(404).send({
+        message: `advertisement does not exist`
+      })
+    }
+    return advertisement.update(res.body)
+    .then(advertisement => res.send(advertisement))
   })
+  .catch(error => next(error))
 })
+
 module.exports = router
