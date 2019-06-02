@@ -43,12 +43,11 @@ router.get('/advertisements/:id', function (req, res) {
 
   //CREATE ADVERTISEMENT
 router.post('/advertisements', function (req, res) {
-  // console.log('Incoming data: ', req.body.formvalues.formvalues)
   res.json({ message: 'Create a new advertisement' })
 })
 
 //UPDATE ADVERTISEMENT    
-router.put('/advertisements/:id', (req, res, next) => { console.log("incoming !!!!!!!!")
+router.put('/advertisements/:id', (req, res, next) => { 
   Advertisements
   .findByPk(req.params.id)
   .then(advertisement => {
